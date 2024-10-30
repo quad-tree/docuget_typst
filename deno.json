@@ -1,0 +1,28 @@
+{
+  "deploy": {
+    "project": "",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "main.ts"
+  },
+  "tasks": {
+    "dev": "deno run --allow-net --allow-env --env --allow-read -r --unstable-kv --watch main.ts",
+    "wh": "deno serve -A --env -r --unstable-kv --watch main.ts",
+    "build": "deno compile main.ts"
+  },
+  "imports": {
+    "@myriaddreamin/typst-ts-node-compiler": "npm:@myriaddreamin/typst-ts-node-compiler@0.5.0-rc8",
+    "S3Client": "https://deno.land/x/s3_lite_client@0.7.0/mod.ts",
+    "base64": "https://deno.land/x/b64@1.1.28/src/base64.js",
+    "grammy": "https://deno.land/x/grammy@v1.30.0/mod.ts",
+    "grammy_types": "https://deno.land/x/grammy_types@v3.14.0/message.ts",
+    "grammy_types_deno": "https://deno.land/x/grammy@v1.30.0/types.deno.ts",
+    "hono": "https://deno.land/x/hono@v4.3.11/mod.ts",
+    "middleware": "https://deno.land/x/hono@v4.3.11/middleware.ts",
+    "streaming": "https://esm.sh/hono@4.3.11/streaming",
+    "ky": "https://esm.sh/ky@1.7.2",
+    "lodash": "https://cdn.skypack.dev/-/lodash@v4.17.21-K6GEbP02mWFnLA45zAmi/dist=es2019,mode=imports/optimized/lodash.js"
+  }
+}

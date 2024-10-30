@@ -1,0 +1,54 @@
+import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
+import { svg2png, svg2png_buffer } from "./svg2png.ts";
+import _ from "https://cdn.skypack.dev/lodash";
+import { Buffer } from "node:buffer";
+
+interface TypstOptions {
+    format: "svg" | "png" | "pdf";
+    content: string;
+    filename: string;
+    return_type: "file" | "buffer";
+}
+
+const typst_compile = async function (options: object | TypstOptions) {
+    // const imageData: string = _.get(options, "images[0]"); // todo CHECKS
+    // const jsonData: string = _.get(options, "json"); // todo CHECKS >> as JSON.stringify....
+    const format: string = _.get(options, "format").toLocaleLowerCase();
+    const content: string = _.get(options, "content"); // todo nunjucks templating
+
+    console.log(`typst_compile:`);
+    console.log(options);
+    const compiler = NodeCompiler.create({ //todo test fonts
+        // fontArgs: [
+        //   { fontPaths: ['assets/fonts'] },
+        // ]
+    });
+    let result;
+    const filename = options.filename;  // todo check if format is not provided then use options.filename
+    if (options) {
+        if (format == "pdf") {
+            result = await compiler.pdf({
+                mainFileContent: content,
+            });
+        } else {
+            result = await compiler.svg({
+                mainFileContent: content,
+            });
+            /* png version */
+            if (format == "png") {
+                result = svg2png_buffer(result);
+            }
+        }
+        switch (options.return_type) {
+            case "file":
+                return new File([Buffer.from(result)],filename);
+            case "buffer":
+                return Buffer.from(result)
+        } 
+
+    } else {
+        return null;
+    }
+};
+
+export { typst_compile };
