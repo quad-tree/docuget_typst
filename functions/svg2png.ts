@@ -1,12 +1,13 @@
 import type { Buffer } from "buffer";
 import { Resvg } from 'npm:@resvg/resvg-js'
+// import { initWasm, Resvg } from 'npm:@resvg/resvg-wasm'
 // import { Resvg } from 'https://raw.githubusercontent.com/yisibl/resvg-js/refs/heads/main/wasm/index.d.ts'
 // import { Resvg } from 'https://esm.sh/@resvg/resvg-js@2.6.2'
 
 // import ky from "https://esm.sh/v135/ky@1.7.2/distribution/index.js";
 
-
 const svg2png_buffer = function (svg: string): Buffer {
+    // initWasm();
     const opts = {
         fitTo: {
             mode: "width",
@@ -22,6 +23,7 @@ const svg2png_buffer = function (svg: string): Buffer {
 }
 
 const svg2png = function (svg: string, filename:string):File {
+    // initWasm();
     const pngBuffer = svg2png_buffer(svg);
     return new File([pngBuffer],filename)
     // const pngBuffer = await ky.get("https://sfo3.digitaloceanspaces.com/dgt/botchat_01j1ryskf8errs7a34g299xb51/thumbnails/6690b66aF0.png").arrayBuffer();
